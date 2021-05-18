@@ -1,8 +1,18 @@
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class User {
 
-    public String tries;
+    Connection connection;
+
+    public User (Connection connection) {
+        this.connection = connection;
+    }
+
     Scanner scanner = new Scanner(System.in);
 
     int userId;
@@ -59,20 +69,42 @@ public class User {
         this.password = password;
     }
 
+
     void addNewUser() {
         System.out.printf("insert your name: ");
-        String userInputName = scanner.nextLine();
+        String inputName = scanner.next();
         System.out.printf("insert your email: ");
-        String userInputMail = scanner.nextLine();
+        String inputMail = scanner.next();
         System.out.printf("insert your password: ");
-        String userInputPassword = scanner.nextLine();
+        String inputPassword = scanner.next();
+        System.out.println("New user: " + inputName + ", Email: " + inputMail + ", Password: " + inputPassword + " was created.");
+        System.out.println("Now please login!");
     }
 
-    void tries() { // correct or not ? why not used ?
-        int numberOfTries = 3;
-        for (int i = 0; i < 3; i++) {
-            System.out.println(numberOfTries);
+    List<User> userList () throws SQLException {
+
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * from users");
+        List<User> users = new ArrayList<User>();
+        while (resultSet.next()){
+
+            Integer userId = resultSet.getInt("id");
+            String userName = resultSet.getString("name");
+            String email = resultSet.getString("login");
+            String password = resultSet.getString("password");
+            User user = new User(userId, userName, email, password);
+            users.add(user);
         }
+        return users;
+    }
+
+    void insertUser (User user) throws SQLException, ClassNotFoundException {
+        String sql = "INSERT INTO users (id, name, login, password) values (?, ?, ?)";
+        PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
+        preparedStatement.setString(1, user.getUserName());
+        preparedStatement.setString(2, user.getEmail());
+        preparedStatement.setString(3, user.getPassword());
+        preparedStatement.executeUpdate();
     }
 
 }
