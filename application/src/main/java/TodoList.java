@@ -1,10 +1,10 @@
-public class todolist {
+public class TodoList {
 
     int id;
     String newEntry;
     String date;
 
-    public  todolist(int id, String newEntry, String date) {
+    public TodoList(int id, String newEntry, String date) {
         this.id = id;
         this.newEntry = newEntry;
         this.date = date;
