@@ -24,24 +24,14 @@ public class Application {
         User user = new User(1, "one", "firstUser@gmail.com", "firstUser");
         User user1 = new User(2, "two", "second@gmail.com", "secondUser");
         User user2 = new User(3, "Three", "3@gmail.com", "third");
+
         ArrayList userList = new ArrayList();
         userList.add(user);
         userList.add(user1);
         userList.add(user2);
-        //  user.insertUser(user); DB NOT CONNECTED
+        //  user.insertUser(user); DB NOT CONNECTED?
 
         System.out.println("All users" + userList);
-
-        // EVENT REMINDER - need to be put in specific place in the common code.
-
-        EventReminder eventReminder = new EventReminder();
-        LocalDate today = LocalDate.now();
-        LocalDate specificDate = LocalDate.of(2021, Month.MAY, 21);
-        eventReminder.setEvent1(Event.WORK);
-        eventReminder.setUser(user);
-        eventReminder.setTime(specificDate);
-        eventReminder.setReminderTime(today);
-        System.out.println(eventReminder);
 
 
         System.out.println("Welcome to our TO-DO manager");
@@ -52,8 +42,7 @@ public class Application {
             case 1:
                 System.out.println("User selected to register - ");
                 System.out.println("----------------------------");
-                user.addNewUser(); //HOW GET FROM SCANNER INFO INTO DB OR ARRAYLIST/ HOW TO CREATE OBJECT FROM SCANNER INPUT
-
+                user.addNewUser(); //HOW GET FROM SCANNER INFO INTO DB OR ARRAYLIST/ HOW TO CREATE NEW OBJECT FROM SCANNER INPUT
 
                 break;
 
@@ -90,6 +79,54 @@ public class Application {
                     if (isPasswordValid) {
                         System.out.println("Welcome! Choose option: "); // HERE SHOULD GOES MENU OF OPTIONS FROM REGINA
                     }
+                    todolist list = new todolist(01, "make this project", "24/07/2021");
+
+                    System.out.println("----------------------");
+                    System.out.println("Welcome to main menu of Your TO-DO list");
+                    System.out.println("----------------------");
+                    System.out.println("0. Exit the program");
+                    System.out.println("1. Add item to list");
+                    System.out.println("2. Remove item from list");
+                    System.out.println("3. Update item from list to Doing");
+                    System.out.println("4. Update item from list to Done");
+                    System.out.println("5. Display to-do list");
+                    System.out.println();
+                    System.out.print("Enter choice: ");
+
+                    int choice = scanner.nextInt();
+
+                    if(choice == 0){
+                        System.out.println("Goodbye!");
+                    } else if (choice == 1){
+                        System.out.println("Add an item:");
+                        String addItem = scanner.next();
+                        System.out.println(addItem + " has been added to TO-DO  list");
+                        System.out.println(list);
+                    } else if (choice == 2){
+                        System.out.println("Please select which item you want to delete: ");
+                        System.out.println(list);
+                        int deleteItem = scanner.nextInt();
+                        System.out.println(deleteItem + " has been removed from the list!");
+                    } else if (choice == 3) {
+                        System.out.println("Please select which item you want to move to Doing list: ");
+                        System.out.println(list);
+                        int changeItem = scanner.nextInt();
+                        System.out.println(changeItem + "has been moved to Doing list");
+                    } else if (choice == 4){
+                        System.out.println("Please select which item you want to move to Done list: ");
+                        System.out.println(list);
+                        int doneItem = scanner.nextInt();
+                        System.out.println(doneItem + "has been moved to Done list");
+                    } else if (choice == 5){
+                        System.out.println("Full list: ");
+                        System.out.println(list);
+                    } else {
+                        System.out.println("No option like this!");
+                    }
+
+
+
+
                 }
                 break;
             default:
