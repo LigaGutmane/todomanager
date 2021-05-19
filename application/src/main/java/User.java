@@ -6,14 +6,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class User {
-
+    Scanner scanner = new Scanner(System.in);
     Connection connection;
 
-    public User (Connection connection) {
-        this.connection = connection;
-    }
-
-    Scanner scanner = new Scanner(System.in);
 
     int userId;
     String userName;
@@ -69,7 +64,6 @@ public class User {
         this.password = password;
     }
 
-
     void addNewUser() {
         System.out.printf("insert your name: ");
         String inputName = scanner.next();
@@ -108,4 +102,6 @@ public class User {
     }
 
 }
+
+
 

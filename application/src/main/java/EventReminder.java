@@ -65,3 +65,14 @@ public class EventReminder {
     public void setTime(LocalDate now) {
     }
 }
+// EVENT REMINDER - need to be put in the specific place in the common code.
+       /* EventReminder eventReminder = new EventReminder();
+        LocalDate today = LocalDate.now();
+        LocalDate specificDate = LocalDate.of(2021, Month.MAY, 21);
+        eventReminder.setEvent1(Event.WORK);
+        eventReminder.setUser(user);
+        eventReminder.setTime(specificDate);
+        eventReminder.setReminderTime(today);
+        System.out.println(eventReminder);
+
+        */
