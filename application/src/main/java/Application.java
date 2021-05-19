@@ -1,11 +1,6 @@
-import com.sun.xml.internal.bind.v2.TODO;
-
-import java.awt.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Application {
@@ -18,20 +13,23 @@ public class Application {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
-
         Scanner scanner = new Scanner(System.in);
+
+        UserMapper userMapper = new UserMapper();
 
         User user = new User(1, "one", "firstUser@gmail.com", "firstUser");
         User user1 = new User(2, "two", "second@gmail.com", "secondUser");
         User user2 = new User(3, "Three", "3@gmail.com", "third");
 
-        ArrayList userList = new ArrayList();
+        /*ArrayList userList = new ArrayList();
         userList.add(user);
         userList.add(user1);
         userList.add(user2);
-        //  user.insertUser(user); DB NOT CONNECTED?
 
-        System.out.println("All users" + userList);
+        userMapper.insertUser(user);
+        userMapper.insertUser(user1);
+
+        System.out.println("All users" + userList);*/
 
 
         System.out.println("Welcome to our TO-DO manager");
@@ -42,8 +40,7 @@ public class Application {
             case 1:
                 System.out.println("User selected to register - ");
                 System.out.println("----------------------------");
-                user.addNewUser(); //HOW GET FROM SCANNER INFO INTO DB OR ARRAYLIST/ HOW TO CREATE NEW OBJECT FROM SCANNER INPUT
-
+                userMapper.addNewUser();
                 break;
 
             case 2:
@@ -77,32 +74,26 @@ public class Application {
                         System.out.println("End of attempts. Access denied!");
                     }
                     if (isPasswordValid) {
-                        System.out.println("Welcome! Choose option: "); // HERE SHOULD GOES MENU OF OPTIONS FROM REGINA
+                        System.out.println("Welcome! Choose option: ");
                     }
-                    todolist list = new todolist(01, "make this project", "24/07/2021");
 
-                    System.out.println("----------------------");
-                    System.out.println("Welcome to main menu of Your TO-DO list");
-                    System.out.println("----------------------");
-                    System.out.println("0. Exit the program");
-                    System.out.println("1. Add item to list");
-                    System.out.println("2. Remove item from list");
-                    System.out.println("3. Update item from list to Doing");
-                    System.out.println("4. Update item from list to Done");
-                    System.out.println("5. Display to-do list");
-                    System.out.println();
-                    System.out.print("Enter choice: ");
 
+
+
+                    TodoList list = new TodoList(01, "make this project", "24/07/2021");
+                    prinInfoOptions();
                     int choice = scanner.nextInt();
+
 
                     if(choice == 0){
                         System.out.println("Goodbye!");
+
                     } else if (choice == 1){
-                        System.out.println("Add an item:");
-                        String addItem = scanner.next();
-                        System.out.println(addItem + " has been added to TO-DO  list");
-                        System.out.println(list);
+                        ItemAdd add = new ItemAdd();
+                        System.out.println(add);
+
                     } else if (choice == 2){
+
                         System.out.println("Please select which item you want to delete: ");
                         System.out.println(list);
                         int deleteItem = scanner.nextInt();
@@ -127,21 +118,42 @@ public class Application {
 
 
 
+
+
+
+
+
                 }
                 break;
             default:
                 System.out.println("Incorrect input");
         }
 
+        EventReminder eventReminder = new EventReminder();
+        LocalDate today = LocalDate.now();
+        LocalDate specificDate = LocalDate.of(2021, Month.MAY, 21);
+        eventReminder.setEvent1(Event.WORK);
+        eventReminder.setUser(user);
+        eventReminder.setTime(specificDate);
+        eventReminder.setReminderTime(today);
+        System.out.println(eventReminder);
 
 
 
+    }
 
-
-
-
-
-
+    private static void prinInfoOptions() {
+        System.out.println("----------------------");
+        System.out.println("Welcome to main menu of Your TO-DO list");
+        System.out.println("----------------------");
+        System.out.println("0. Exit the program");
+        System.out.println("1. Add item to list");
+        System.out.println("2. Remove item from list");
+        System.out.println("3. Update item from list to Doing");
+        System.out.println("4. Update item from list to Done");
+        System.out.println("5. Display to-do list");
+        System.out.println();
+        System.out.print("Enter choice: ");
     }
 
 
