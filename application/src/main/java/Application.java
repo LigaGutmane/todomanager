@@ -5,32 +5,10 @@ import java.util.Scanner;
 
 public class Application {
 
-    // TODO: 17.05.2021 need to add new user into DB and create arrayList of users
-    // TODO: 17.05.2021 need to connect DB
-    // TODO: 19.05.2021 try reminder in sql - select event
-
-
-
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         Scanner scanner = new Scanner(System.in);
-
         UserMapper userMapper = new UserMapper();
-
-        User user = new User(1, "one", "firstUser@gmail.com", "firstUser");
-        User user1 = new User(2, "two", "second@gmail.com", "secondUser");
-        User user2 = new User(3, "Three", "3@gmail.com", "third");
-
-        /*ArrayList userList = new ArrayList();
-        userList.add(user);
-        userList.add(user1);
-        userList.add(user2);
-
-        userMapper.insertUser(user);
-        userMapper.insertUser(user1);
-
-        System.out.println("All users" + userList);*/
-
 
         System.out.println("Welcome to our TO-DO manager");
         System.out.println("Please  choose : 1 - to register or 2 - to login: ");
@@ -42,7 +20,6 @@ public class Application {
                 System.out.println("----------------------------");
                 userMapper.addNewUser();
                 break;
-
             case 2:
                 System.out.println("User selected to Login-");
                 System.out.println("________________________________");
@@ -51,30 +28,32 @@ public class Application {
                 String emailInput = scanner.next();
                 System.out.println("Email input: " + emailInput);
                 UserValidation userValidation = new UserValidation();
-                boolean isEmailValid = userValidation.isEmailValid(emailInput, user);
+                boolean isEmailValid = userValidation.isEmailValid( ); //? HOW TO CALL RESULTSET IN HERE);
 
+                //// how to call here. While email will not be equals to any email in the DB continue with while Try again
                 if (!isEmailValid) {
-                    while (!emailInput.equalsIgnoreCase(user.email)) {
+                    while (!emailInput.equalsIgnoreCase()) {
                         System.out.println("Try again: ");
                         emailInput = scanner.next();
                     }
                     isEmailValid = true;
                 }
+                // BUT HERE, WHEN EMAILINPUT = TO ANY FROM DB IT SHOULD ASKS TO INPUT PASS
                 if (isEmailValid) {
-                    System.out.println("Please enter your password: ");
+                   System.out.println("Please enter your password: ");
                     String passwordInput = scanner.next();
-                    boolean isPasswordValid = userValidation.isPasswordValid(passwordInput, user);
+                   boolean isPasswordValid = userValidation.isPasswordValid( ); ////? HOW TO CALL RESULTSET IN HERE);
                     if (!isPasswordValid) {
-                        int count = 1;
+                       int count = 1;
                         do {
                             System.out.println("Enter your password again. You have: " + (4 - count) + " tries left");
                             passwordInput = scanner.next();
-                            count++;
-                        } while ((passwordInput.equalsIgnoreCase(user.password)) || count < 4);
-                        System.out.println("End of attempts. Access denied!");
-                    }
-                    if (isPasswordValid) {
-                        System.out.println("Welcome! Choose option: ");
+                           count++;
+                       } while ((passwordInput.equalsIgnoreCase(user.password)) || count < 4);
+                       System.out.println("End of attempts. Access denied!");
+                   }
+                   if (isPasswordValid) {
+                     System.out.println("Welcome! Choose option: ");
                     }
 
 
@@ -82,38 +61,37 @@ public class Application {
 
                     TodoList list = new TodoList(01, "make this project", "24/07/2021");
                     prinInfoOptions();
-                    int choice = scanner.nextInt();
+                  int choice = scanner.nextInt();
 
 
-                    if(choice == 0){
+                   if(choice == 0){
                         System.out.println("Goodbye!");
 
-                    } else if (choice == 1){
-                        ItemAdd add = new ItemAdd();
-                        System.out.println(add);
+                  } else if (choice == 1){
+                      ItemAdd add = new ItemAdd();
+                      System.out.println(add);
 
                     } else if (choice == 2){
 
                         System.out.println("Please select which item you want to delete: ");
                         System.out.println(list);
-                        int deleteItem = scanner.nextInt();
+                       int deleteItem = scanner.nextInt();
                         System.out.println(deleteItem + " has been removed from the list!");
-                    } else if (choice == 3) {
+                 } else if (choice == 3) {
                         System.out.println("Please select which item you want to move to Doing list: ");
-                        System.out.println(list);
-                        int changeItem = scanner.nextInt();
+                       System.out.println(list);
+                       int changeItem = scanner.nextInt();
                         System.out.println(changeItem + "has been moved to Doing list");
                     } else if (choice == 4){
                         System.out.println("Please select which item you want to move to Done list: ");
                         System.out.println(list);
-                        int doneItem = scanner.nextInt();
+                       int doneItem = scanner.nextInt();
                         System.out.println(doneItem + "has been moved to Done list");
-                    } else if (choice == 5){
+                   } else if (choice == 5){
                         System.out.println("Full list: ");
                         System.out.println(list);
                     } else {
-                        System.out.println("No option like this!");
-                    }
+                   }
 
 
 
@@ -126,21 +104,10 @@ public class Application {
                 }
                 break;
             default:
-                System.out.println("Incorrect input");
+               System.out.println("Incorrect input");
         }
 
-        EventReminder eventReminder = new EventReminder();
-        LocalDate today = LocalDate.now();
-        LocalDate specificDate = LocalDate.of(2021, Month.MAY, 21);
-        eventReminder.setEvent1(Event.WORK);
-        eventReminder.setUser(user);
-        eventReminder.setTime(specificDate);
-        eventReminder.setReminderTime(today);
-        System.out.println(eventReminder);
-
-
-
-    }
+   }
 
     private static void prinInfoOptions() {
         System.out.println("----------------------");
@@ -154,10 +121,10 @@ public class Application {
         System.out.println("5. Display to-do list");
         System.out.println();
         System.out.print("Enter choice: ");
+
+
+        }
     }
-
-
-}
 
 
 
