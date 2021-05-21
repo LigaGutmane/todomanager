@@ -25,8 +25,8 @@ public class UserMapper {
         System.out.println("Now please login!");
     }
 
-    List<User> userList () throws SQLException {
 
+    List<User> userList () throws SQLException {
 
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * from users");
@@ -51,4 +51,5 @@ public class UserMapper {
         preparedStatement.setString(3, user.getPassword());
         preparedStatement.executeUpdate();
     }
+
 }
