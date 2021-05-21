@@ -1,14 +1,23 @@
-
+import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ItemAdd {
+
+    Connection connection = DbConnectionItems.getConnection();
+
 
         String date;
         String time;
         String nameOfTask;
         String description;
         String priority;
+
+
+    public ItemAdd(Integer itemId, String date, String time, String nameOfTask, String description, String priority) throws SQLException, ClassNotFoundException {
+    }
 
 
 //    getters and setters
@@ -49,7 +58,7 @@ public class ItemAdd {
 
 //    Constructor: prompting user to enter task date, time, name, description and priority (high, medium or low)
 
-        public ItemAdd() {
+        public ItemAdd() throws SQLException, ClassNotFoundException {
 
             Scanner scanner = new Scanner(System.in);
 
@@ -79,7 +88,7 @@ public class ItemAdd {
 
 //    SimpleDateFormat will parse the given date and throws Exception if input is not valid
 
-        public void getDate() {
+        public String getDate() {
             Scanner scanner = new Scanner(System.in);
             SimpleDateFormat date1 = new SimpleDateFormat("dd/MM/yyyy");
             date1.setLenient(false);
@@ -90,9 +99,10 @@ public class ItemAdd {
             } catch (Exception e) {
                 System.out.println(this.date + " is not a valid date");
             }
+            return this.date;
         }
 
-        public void getTime() {
+        public String getTime() {
             Scanner scanner = new Scanner(System.in);
             SimpleDateFormat time1 = new SimpleDateFormat("HH:mm");
             time1.setLenient(false);
@@ -103,6 +113,7 @@ public class ItemAdd {
             } catch (Exception e) {
                 System.out.println(this.time + " is not a valid time");
             }
+            return this.time;
         }
 
     @Override
@@ -114,6 +125,38 @@ public class ItemAdd {
                 ", description='" + description + '\'' +
                 ", priority='" + priority + '\''+
                 '}';
+    }
+
+
+    List<ItemAdd> itemList () throws SQLException, ClassNotFoundException {
+
+
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * from items");
+        List<ItemAdd> items = new ArrayList<ItemAdd>();
+        while (resultSet.next()){
+
+            Integer itemId = resultSet.getInt("id");
+            String date = resultSet.getString("date");
+            String time = resultSet.getString("time");
+            String nameOfTask = resultSet.getString("nameOfTask");
+            String description = resultSet.getString("description");
+            String priority = resultSet.getString("priority");
+            ItemAdd item = new ItemAdd (itemId, date, time, nameOfTask, description, priority);
+            items.add(item);
+        }
+        return items;
+    }
+
+    void insertItem (ItemAdd item) throws SQLException, ClassNotFoundException {
+        String sql = "INSERT INTO items (date, time, nameOfTask, description, priority)";
+        PreparedStatement preparedStatement = DbConnectionItems.getConnection().prepareStatement(sql);
+        preparedStatement.setString(1, item.getDate());
+        preparedStatement.setString(2, item.getTime());
+        preparedStatement.setString(3, item.getNameOfTask());
+        preparedStatement.setString(4, item.getDescription());
+        preparedStatement.setString(5, item.getPriority());
+        preparedStatement.executeUpdate();
     }
 }
 
